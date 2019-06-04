@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<style type="text/css">
+		.wap-content {
+			width: 300px;
+			border: 2px solid #000;
+		}
+		.wap-number {
+			float: left;
+			width: 25%;
+		}
+		.wap-resuft {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		.wap-resuft input {
+			width: 95%;
+			line-height: 30px;
+			text-align: right;
+		}
+		.wap-number button{
+			padding: 10px 15px;
+			margin-bottom: 10px;
+    		font-size: 15px;
+		}
+		.clearfix {
+			clear: both;
+		}
+	</style>
+</head>
+<body>
+	<center>
+		<div class="wap-content">
+			<div class="wap-resuft">
+				<input type="text" name="content-resuft" class="content-resuft" readonly>
+			</div>
+			<div>
+				<div class="wap-number">
+					<button class="btn-event">1</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">2</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">3</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">+</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">4</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">5</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">6</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">-</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">7</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">8</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">9</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">x</button>
+				</div>
+				<div class="wap-number">
+					<button onclick="remove();">C</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">0</button>
+				</div>
+				<div class="wap-number">
+					<button onclick="submit_resuft();">=</button>
+				</div>
+				<div class="wap-number">
+					<button class="btn-event">/</button>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</center>
+</body>
+<script type="text/javascript">
+	var temp_bt = '';
+	var temp_old = '';
+	var total = 0;
+	var check_bt = true;
+	$(".btn-event").click(function(e) {
+	  var html = '';
+	  var val_old = $('.content-resuft').val();
+	  var val = $(e.currentTarget).text();
+	  html += val_old+val;
+	  $('.content-resuft').val(html);
+	  //kiểm tra là số hay là biểu thức
+	  if(val == '+' || val == '-' || val == 'x' || val == '/') {
+	  	temp_bt = val;
+	  	temp_old = '';
+	  	check_bt = true;
+	  }
+	  else {
+	  		if(check_bt == true) {
+		  		if(temp_bt == '') {
+		  			total = Number(val);
+		  			check_bt = false;
+		  		}
+		  		else if(temp_bt == '+') {
+		  			total += Number(val);
+		  			check_bt = false;
+		  		}
+		  		else if(temp_bt == '-') {
+		  			total -= Number(val);
+		  			check_bt = false;
+		  		}
+		  		else if(temp_bt == 'x') {
+		  			total *= Number(val);
+		  			check_bt = false;
+		  		}
+		  		else if(temp_bt == '/') {
+		  			total /= Number(val);
+		  			check_bt = false;
+		  		}
+		  		temp_old = val;
+		  	}
+		  	else {
+		  		var new_value = temp_old+val;
+		  		if(temp_bt == '') {
+		  			total = Number(new_value);
+		  			check_bt = false;
+		  		}
+		  		else if(temp_bt == '+') {
+		  			total += Number(new_value);
+		  			check_bt = false;
+		  		}
+		  		else if(temp_bt == '-') {
+		  			total -= Number(new_value);
+		  			check_bt = false;
+		  		}
+		  		else if(temp_bt == 'x') {
+		  			total *= Number(new_value);
+		  			check_bt = false;
+		  		}
+		  		else if(temp_bt == '/') {
+		  			total /= Number(new_value);
+		  			check_bt = false;
+		  		}
+		  		temp_old = new_value;	
+		  	}
+	  	}
+	});
+	function remove() {
+	  	$('.content-resuft').val('');
+		temp_bt = '';
+		temp_old = '';
+		total = 0;
+	}
+	function submit_resuft() {
+	  $('.content-resuft').val(total);
+	}
+</script>
+</html>
